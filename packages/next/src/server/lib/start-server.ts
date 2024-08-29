@@ -187,7 +187,7 @@ export async function startServer(
     server.keepAliveTimeout = keepAliveTimeout
   }
   if (timeout) {
-    server.timoeut = timeout
+    server.timeout = timeout
   }
   server.on('upgrade', async (req, socket, head) => {
     try {
