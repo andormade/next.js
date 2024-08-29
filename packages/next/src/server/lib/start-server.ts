@@ -41,6 +41,7 @@ export interface StartServerOptions {
   allowRetry?: boolean
   customServer?: boolean
   minimalMode?: boolean
+  timeout?: number
   keepAliveTimeout?: number
   // this is dev-server only
   selfSignedCertificate?: SelfSignedCertificate
@@ -93,6 +94,7 @@ export async function startServer(
     hostname,
     minimalMode,
     allowRetry,
+    timeout,
     keepAliveTimeout,
     selfSignedCertificate,
   } = serverOptions
@@ -183,6 +185,9 @@ export async function startServer(
 
   if (keepAliveTimeout) {
     server.keepAliveTimeout = keepAliveTimeout
+  }
+  if (timeout) {
+    server.timoeut = timeout
   }
   server.on('upgrade', async (req, socket, head) => {
     try {
@@ -386,6 +391,8 @@ export async function startServer(
       process.exit(RESTART_EXIT_CODE)
     })
   }
+
+  return server
 }
 
 if (process.env.NEXT_PRIVATE_WORKER && process.send) {

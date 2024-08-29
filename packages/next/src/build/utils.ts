@@ -2226,6 +2226,7 @@ const currentPort = parseInt(process.env.PORT, 10) || 3000
 const hostname = process.env.HOSTNAME || '0.0.0.0'
 
 let keepAliveTimeout = parseInt(process.env.KEEP_ALIVE_TIMEOUT, 10)
+let timeout = parseInt(process.env.TIMEOUT, 10)
 const nextConfig = ${JSON.stringify(nextConfig)}
 
 process.env.__NEXT_PRIVATE_STANDALONE_CONFIG = JSON.stringify(nextConfig)
@@ -2241,6 +2242,14 @@ if (
   keepAliveTimeout = undefined
 }
 
+if (
+  Number.isNaN(timeout) ||
+  !Number.isFinite(timeout) ||
+  timeout < 0
+) {
+  timeout = undefined
+}
+
 startServer({
   dir,
   isDev: false,
@@ -2248,6 +2257,7 @@ startServer({
   hostname,
   port: currentPort,
   allowRetry: false,
+  timeout,
   keepAliveTimeout,
 }).catch((err) => {
   console.error(err);

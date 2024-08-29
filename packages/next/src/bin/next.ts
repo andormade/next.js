@@ -328,11 +328,18 @@ program
   .option(
     '-H, --hostname <hostname>',
     'Specify a hostname on which to start the application (default: 0.0.0.0).'
+
+  )
+  .addOption(
+    new Option(
+      '--timeout <timeout>',
+      'Specify the maximum amount of milliseconds to wait before closing inactive connection after a request was received.'
+    ).argParser(parseValidPositiveInteger)
   )
   .addOption(
     new Option(
       '--keepAliveTimeout <keepAliveTimeout>',
-      'Specify the maximum amount of milliseconds to wait before closing inactive connections.'
+      'Specify the maximum amount of milliseconds to wait before closing inactive Keep-Alive connections after the last response was sent.'
     ).argParser(parseValidPositiveInteger)
   )
   .action((directory: string, options: NextStartOptions) =>
